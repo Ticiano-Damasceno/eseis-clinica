@@ -1,0 +1,3 @@
+.env
+*.log
+/docs/Nome do host.txt*:Zone.Identifier

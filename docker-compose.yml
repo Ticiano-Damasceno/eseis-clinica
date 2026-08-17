@@ -1,0 +1,29 @@
+services:
+  laravel:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        UID: 1000
+        GID: 1000
+    ports:
+      - "8000:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: eseis
+      MARIADB_USER: eseis
+      MARIADB_PASSWORD: eseis
+      MARIADB_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:
