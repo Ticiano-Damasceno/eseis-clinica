@@ -2,3 +2,4 @@
 *.log
 /docs/Nome do host.txt
 /docs/*.Identifier
+/docs/archive
