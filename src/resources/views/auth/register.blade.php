@@ -2,11 +2,11 @@
     <h2 class="font-display text-3xl text-neutral-800 mb-6">Criar conta</h2>
 
     <div x-data="{ perfil: 'psicologo' }">
-        <x-ui.tab-toggle
+        <!-- <x-ui.tab-toggle
             name="perfil"
-            :options="['psicologo'=>'Psicólogo', 'admin' => 'Administrador']" />
+            :options="['psicologo'=>'Psicólogo', 'admin' => 'Administrador']" /> -->
 
-        <form action="POST" action="{{ route('register') }}" class="mt-6 space-y-4">
+        <form method="POST" action="{{ route('register') }}" class="mt-6 space-y-4">
             @csrf
 
             <div>

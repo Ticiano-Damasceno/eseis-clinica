@@ -13,7 +13,7 @@
         <!-- Coluna esquerda -->
         <div class="hidden lg:flex lg:w-1/2 bg-eseis-terracotta flex-col items-center justify-between relative overflow-hidden">
             <div class="text-center">
-                <h1 class="font-display text-white text-6xl">Eseís</h1>
+                <h1 class="font-display text-white text-6xl mt-8">Eseís</h1>
                 <p class="text-white/90 mt-2 tracking-widest text-sm uppercase">
                     Saúde emocional e cuidado
                 </p>
