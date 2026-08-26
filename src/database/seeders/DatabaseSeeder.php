@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Sala;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,11 +18,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Admin Eseis',
+            'nome' => 'Admin Eseis',
             'email' => 'admin@eseis.psc.br',
             'cpf' => '000.000.000-00',
             'password' => Hash::make('admin123'),
-            'role' => 'admin',
+            'perfil' => 'admin',
+        ]);
+
+        Sala::create([
+            'nome'=> 'Sala 1',
+            'descricao' => 'Sala de reunião',
+            'capacidade' => 1,
+            'valor_hora' => 100.00,
+            'infantil' => false,
+            'online' => false,
+            'ar_condicionado' => true,
         ]);
 
         // User::factory()->create([

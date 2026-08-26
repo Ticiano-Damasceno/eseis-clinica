@@ -15,7 +15,7 @@ class EnsureUserHasRole
      */
     public function handle(Request $request, Closure $next, string ...$role): Response
     {
-        if (! in_array($request->user()?->role, $role, true)) {
+        if (! in_array($request->user()?->perfil, $role, true)) {
             abort(403, 'Você não tem permissão para acessar esta área.');
         }   
     

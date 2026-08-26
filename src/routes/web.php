@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SalaController;
 
 Route::get('/', function () {
     // return view('welcome');
@@ -22,6 +23,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/teste', function () {
         return 'Você é admin: ' . auth()->user()->nome;
     });
+
+    Route::get('/salas', [SalaController::class, 'index'])->name('salas.index');
 });
 
 // exemplo futuro, quando Cliente existir:
