@@ -18,8 +18,19 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/preview', function() {
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/teste', function () {
+        return 'Você é admin: ' . auth()->user()->nome;
+    });
+});
+
+// exemplo futuro, quando Cliente existir:
+Route::middleware(['auth', 'role:admin,psicologo'])->group(function () {
+    // rota acessível a ambos
+});
+
+Route::get('/preview', function () {
     return view('preview.login');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
