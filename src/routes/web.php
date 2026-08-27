@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth', 'role:admin,psicologo'])->group(function () {
     Route::get('/admin/teste', function () {
         return 'Você é admin: ' . auth()->user()->nome;
     });
