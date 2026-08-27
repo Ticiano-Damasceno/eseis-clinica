@@ -10,7 +10,7 @@
             @csrf
 
             <div>
-                <x-ui.input name="name" placeholder="Nome completo" icon="user" :value="old('name')" required autofocus />
+                <x-ui.input name="nome" placeholder="Nome completo" icon="user" :value="old('name')" required autofocus />
                 @error('name')
                 <p class="text-sm text-red-600 mt-1 ">{{ $message }}</p>
                 @enderror
