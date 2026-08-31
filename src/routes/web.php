@@ -20,16 +20,20 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'role:admin,psicologo'])->group(function () {
-    Route::get('/admin/teste', function () {
-        return 'Você é admin: ' . auth()->user()->nome;
-    });
-
     Route::get('/salas', [SalaController::class, 'index'])->name('salas.index');
 });
 
-// exemplo futuro, quando Cliente existir:
-Route::middleware(['auth', 'role:admin,psicologo'])->group(function () {
-    // rota acessível a ambos
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/salas', [SalaController::class, 'index'])->name('salas.index');
+    Route::get('/salas/criar', [SalaController::class, 'create'])->name('salas.create');
+    Route::post('/salas', [SalaController::class, 'store'])->name('salas.store');
+    Route::get('/salas/{sala}/editar', [SalaController::class, 'edit'])->name('salas.edit');
+    Route::put('/salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
+    Route::delete('/salas/{sala}', [SalaController::class, 'destroy'])->name('salas.destroy');
+    
+    Route::get('/admin/teste', function () {
+        return 'Você é admin: ' . auth()->user()->nome;
+    });
 });
 
 Route::get('/preview', function () {
