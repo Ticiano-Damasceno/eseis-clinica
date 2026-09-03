@@ -4,7 +4,7 @@
         <h1 class="font-display text-3xl text-eseis-terracotta">Salas de atendimentos</h1>
 
         @if (auth()->user()->perfil === 'admin')
-            <a href="{{ route('admin.salas.index') }}"
+            <a href="{{ route('admin.salas.create') }}"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('admin.salas.*') ? 'bg-white/20 font-semibold' : 'hover:bg-white/10' }}">
                 <x-ui.button variant="primary" class="px-2">
                     + Nova sala
