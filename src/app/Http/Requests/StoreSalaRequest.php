@@ -35,6 +35,7 @@ class StoreSalaRequest extends FormRequest
         return [
             'nome' => ['required', 'string', 'max:255'],
             'descricao' => ['nullable', 'string'],
+            'imagem' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:2048'],
             'capacidade' => ['required', 'integer', 'min:1'],
             'valor_hora' => ['required', 'numeric', 'min:0'],
             'infantil' => ['boolean'],

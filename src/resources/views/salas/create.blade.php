@@ -6,12 +6,23 @@
         <p class="text-sm text-green-600 mb-4">{{ session('status') }}</p>
     @endif
 
-    <form method="POST" action="{{ route('admin.salas.store') }}" class="max-w-lg space-y-4">
+    <form method="POST" action="{{ route('admin.salas.store') }}" class="max-w-lg space-y-4"
+        enctype="multipart/form-data">
         @csrf
 
         <div>
             <x-ui.input name="nome" placeholder="Nome da sala" :value="old('nome')" required />
             @error('nome')
+            <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div>
+            <label for="imagem" class="block text-sm text-neutral-600 mb-1">Foto da sala</label>
+            <input type="file" name="imagem" id="imagem" accept="image/*" class="w-full text-sm text-neutral-600
+               file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
+               file:bg-eseis-tan/40 file:text-eseis-terracotta file:font-medium
+               hover:file:bg-eseis-tan/60 file:cursor-pointer">
+            @error('imagem')
             <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
         </div>
 

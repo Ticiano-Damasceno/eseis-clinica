@@ -6,13 +6,33 @@
         <p class="text-sm text-green-600 mb-4">{{ session('status') }}</p>
     @endif
 
-    <form method="POST" action="{{ route('admin.salas.update', $sala) }}" class="max-w-lg space-y-4">
+    <form method="POST" action="{{ route('admin.salas.update', $sala) }}" class="max-w-lg space-y-4"
+        enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         <div>
             <x-ui.input name="nome" placeholder="Nome da sala" :value="old('nome', $sala->nome)" required />
             @error('nome')
+            <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
+        </div>
+
+        <div>
+            <label for="imagem" class="block text-sm text-neutral-600 mb-1">Foto da sala</label>
+
+            @if ($sala->imagem)
+                <img src="{{ asset('storage/' . $sala->imagem) }}" alt="Foto de {{ $sala->nome }}"
+                    class="w-full h-40 object-cover rounded-lg mb-2">
+            @endif
+
+            <input type="file" name="imagem" id="imagem" accept="image/*" class="w-full text-sm text-neutral-600
+               file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
+               file:bg-eseis-tan/40 file:text-eseis-terracotta file:font-medium
+               hover:file:bg-eseis-tan/60 file:cursor-pointer">
+
+            <p class="text-xs text-neutral-400 mt-1">Deixe em branco para manter a imagem atual.</p>
+
+            @error('imagem')
             <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
         </div>
 
@@ -30,17 +50,13 @@
         </div>
 
         <div>
-            <div>
-                <div class="flex items-center gap-2">
-                    <span class="text-neutral-500 shrink-0">R$</span>
-                    <x-ui.input name="valor_hora" inputmode="decimal" placeholder="0,00" :value="old('valor_hora')"
-                        required />
-                </div>
-                @error('valor_hora')
-                <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
+            <div class="flex items-center gap-2">
+                <span class="text-neutral-500 shrink-0">R$</span>
+                <x-ui.input name="valor_hora" inputmode="decimal" placeholder="0,00" :value="old('valor_hora', number_format($sala->valor_hora, 2, ',', '.'))" required />
             </div>
             @error('valor_hora')
-            <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
+                <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
         <div class="flex gap-6 text-sm text-neutral-600">
@@ -67,7 +83,16 @@
                 </x-ui.button>
             </a>
         </div>
+    </form>
 
+    <form method="POST" action="{{ route('admin.salas.destroy', $sala) }}" class="max-w-lg mt-6"
+        onsubmit="return confirm('Desativar esta sala? Ela deixará de aparecer nas listagens.')">
+        @csrf
+        @method('DELETE')
+
+        <x-ui.button variant="danger" type="submit">
+            Desativar sala
+        </x-ui.button>
     </form>
 
 </x-layout.app-layout>

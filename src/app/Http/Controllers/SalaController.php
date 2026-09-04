@@ -21,7 +21,13 @@ class SalaController extends Controller
 
     public function store(StoreSalaRequest $request)
     {
-        Sala::create($request->validated());
+        $dados = $request->validated();
+
+        if($request->hasFile('imagem')) {
+            $dados['imagem'] = $request->file('imagem')->store('salas', 'public');
+        }
+
+        Sala::create($dados);
         return redirect()->route('salas.index')->with('success', 'Sala criada com sucesso!');
     }
 
@@ -32,7 +38,15 @@ class SalaController extends Controller
 
     public function update(UpdateSalaRequest $request, Sala $sala)
     {
-        $sala->update($request->validated());
+        $dados = $request->validated();
+
+        if ($request->hasFile('imagem')) {
+            $dados['imagem'] = $request->file('imagem')->store('salas', 'public');
+        } else {
+            unset($dados['imagem']); // Remove 'imagem' de $dados se houver nova imagem
+        }
+
+        $sala->update($dados);
         return redirect()->route('admin.salas.index')->with('success', 'Sala atualizada com sucesso!');
     }
 
