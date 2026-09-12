@@ -6,6 +6,7 @@ use App\Http\Requests\StoreSalaRequest;
 use App\Http\Requests\UpdateSalaRequest;
 use Illuminate\Http\Request;
 use App\Models\Sala;
+use Carbon\CarbonImmutable;
 
 class SalaController extends Controller
 {
@@ -54,5 +55,14 @@ class SalaController extends Controller
     {
         $sala->delete();
         return redirect()->route('admin.salas.index')->with('success', 'Sala excluída com sucesso!');
+    }
+
+    public function show(Sala $sala)
+    {
+        $inicio = CarbonImmutable::today()->startOfWeek(0);
+
+        $dias = collect(range(0,6))->map(fn ($indice) => $inicio->addDays($indice));
+
+        return view('salas.show', compact('sala', 'dias'));
     }
 }

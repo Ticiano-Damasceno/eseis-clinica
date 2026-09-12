@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalaController;
+use App\Http\Controllers\AgendaController;
 
 Route::get('/', function () {
     // return view('welcome');
@@ -21,6 +22,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'role:admin,psicologo'])->group(function () {
     Route::get('/salas', [SalaController::class, 'index'])->name('salas.index');
+    Route::get('/salas/{sala}', [SalaController::class, 'show'])->name('salas.show');
+    Route::get('/minha-agenda', [AgendaController::class, 'index'])->name('agenda.index');
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {

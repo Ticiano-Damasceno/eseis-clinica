@@ -45,7 +45,7 @@
                     </svg>
                     Início
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10">
+                <a href="{{ route('agenda.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -82,7 +82,7 @@
             </form>
         </aside>
 
-        <main class="flex-1 px-6 lg:px-12 py-8 pt-20 lg:pt-8">
+        <main class="flex-1 px-6 lg:px-12 py-8 pt-20 lg:pt-8 min-w-0">
             {{ $slot }}
         </main>
     </div>

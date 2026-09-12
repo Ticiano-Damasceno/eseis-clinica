@@ -10,13 +10,13 @@
         @endif
         @if (auth()->user()->perfil === 'admin')
             <a href="{{ route('admin.salas.edit', $sala) }}" title="Editar sala" class="absolute top-3 right-3 p-2 rounded-full
-                                   bg-white/90 text-eseis-terracotta
-                                   shadow-sm hover:bg-white
-                                   transition">
+                                           bg-white/90 text-eseis-terracotta
+                                           shadow-sm hover:bg-white
+                                           transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5
-                                       M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                               M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                 </svg>
             </a>
         @endif
@@ -58,8 +58,10 @@
             </div>
         @endif
 
-        <x-ui.button variant="secondary" class="mt-4">
+        <a href="{{ route('salas.show', $sala) }}" class="block mt-4 w-full py-3 rounded-lg text-center font-medium
+           bg-eseis-yellow text-neutral-800 hover:bg-eseis-terracotta
+           transition-colors">
             Saiba mais
-        </x-ui.button>
+        </a>
     </div>
 </div>
