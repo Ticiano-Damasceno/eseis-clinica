@@ -67,6 +67,46 @@
                     </svg>
                     Créditos
                 </a>
+                @if (auth()->user()?->perfil === 'admin')
+                <a
+                    href="{{ route('admin.configuracoes.funcionamento.index') }}"
+                    @if (request()->routeIs('admin.configuracoes.*'))
+                    aria-current="page"
+                    @endif
+                    class="flex items-center gap-3 rounded-lg px-4 py-3
+                    {{ request()->routeIs('admin.configuracoes.*')
+                        ? 'bg-white/20 font-semibold'
+                        : 'hover:bg-white/10' }}"
+                    >
+                    <svg
+                        class="h-5 w-5 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path
+                            d="M4 7h16M4 17h16"
+                            stroke-width="2"
+                            stroke-linecap="round" />
+
+                        <circle
+                            cx="9"
+                            cy="7"
+                            r="3"
+                            fill="currentColor"
+                            stroke="none" />
+
+                        <circle
+                            cx="15"
+                            cy="17"
+                            r="3"
+                            fill="currentColor"
+                            stroke="none" />
+                    </svg>
+
+                    <span>Configurações</span>
+                </a>
+                @endif
             </nav>
 
             <form method="post" action="{{ route('logout') }}">

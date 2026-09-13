@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\FuncionamentoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SalaController;
@@ -33,8 +34,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/salas/{sala}/editar', [SalaController::class, 'edit'])->name('salas.edit');
     Route::put('/salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
     Route::delete('/salas/{sala}', [SalaController::class, 'destroy'])->name('salas.destroy');
-    
-    Route::get('/admin/teste', function () {
+
+    Route::get('/configuracoes/funcionamento', [
+        FuncionamentoController::class,
+        'index',
+    ])->name('configuracoes.funcionamento.index');
+    Route::post('/configuracoes/funcionamento', [
+        FuncionamentoController::class,
+        'store'
+    ])->name('configuracoes.funcionamento.store');
+
+    Route::get('/teste', function () {
         return 'Você é admin: ' . auth()->user()->nome;
     });
 });
