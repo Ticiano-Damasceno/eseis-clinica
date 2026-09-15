@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\DestroyHorarioFuncionamentoRequest;
+use App\Http\Requests\Admin\UpdateHorarioFuncionamentoRequest;
+use App\Services\FuncionamentoService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreHorarioFuncionamentoRequest;
 use App\Models\BloqueioClinica;
 use App\Models\HorarioFuncionamento;
 use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class FuncionamentoController extends Controller
@@ -44,33 +44,10 @@ class FuncionamentoController extends Controller
         ]);
     }
 
-    public function store(StoreHorarioFuncionamentoRequest $request): RedirectResponse
+    public function store(StoreHorarioFuncionamentoRequest $request, FuncionamentoService $service): RedirectResponse
     {
-        $dados = $request->validated();
-
-        $dados['horario_inicio'] .= ':00';
-        $dados['horario_fim'] .= ':00';
-
         try {
-            Cache::lock('funcionamento:escrita', 30)->block(
-                5,
-                function () use ($dados): void {
-                    $sobrepoe = HorarioFuncionamento::query()
-                        ->where('dia_semana', $dados['dia_semana'])
-                        ->where('horario_inicio','<',$dados['horario_fim'])
-                        ->where('horario_fim', '>', $dados['horario_inicio'])
-                        ->exists();
-
-                    if ($sobrepoe) {
-                        throw ValidationException::withMessages([
-                            'horario_inicio' =>
-                            'Essa faixa se sobrepõe a um horário já cadastrado.',
-                        ]);
-                    }
-
-                    HorarioFuncionamento::create($dados);
-                }
-            );
+            $service->cadastrarHorario($request->validated());
         } catch (LockTimeoutException $exception) {
             return back()
                 ->withInput()
@@ -82,5 +59,38 @@ class FuncionamentoController extends Controller
 
         return to_route('admin.configuracoes.funcionamento.index')
             ->with('success', 'Horário cadastrado com sucesso.');
+    }
+
+    public function update(UpdateHorarioFuncionamentoRequest $request, HorarioFuncionamento $horario, FuncionamentoService $service): RedirectResponse
+    {
+        try {
+            $service->atualizarHorario(
+                $horario->id,
+                $request->validated()
+            );
+        } catch (LockTimeoutException $exception) {
+            return back()->withErrors([
+                    'horario_inicio' =>
+                        'Outra alteração está em andamento. Tente novamente.',
+                ]);
+        }
+
+        return to_route('admin.configuracoes.funcionamento.index')
+            ->with('success', 'Horário atualizado com sucesso.');
+    }
+
+    public function destroy(DestroyHorarioFuncionamentoRequest $request, HorarioFuncionamento $horario, FuncionamentoService $service): RedirectResponse
+    {
+        try {
+            $service->excluirHorario($horario->id);
+        } catch (LockTimeoutException $exception) {
+            return back()->withErrors([
+                    'horario_inicio' =>
+                        'Outra exclusão está em andamento. Tente novamente.',
+                ]);
+        }
+
+        return to_route('admin.configuracoes.funcionamento.index')
+            ->with('success', 'Horário de funcionamento excluído com sucesso.');
     }
 }

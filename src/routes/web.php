@@ -35,18 +35,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/salas/{sala}', [SalaController::class, 'update'])->name('salas.update');
     Route::delete('/salas/{sala}', [SalaController::class, 'destroy'])->name('salas.destroy');
 
-    Route::get('/configuracoes/funcionamento', [
-        FuncionamentoController::class,
-        'index',
-    ])->name('configuracoes.funcionamento.index');
-    Route::post('/configuracoes/funcionamento', [
-        FuncionamentoController::class,
-        'store'
-    ])->name('configuracoes.funcionamento.store');
+    Route::get('/configuracoes/funcionamento', [FuncionamentoController::class,'index',])->name('configuracoes.funcionamento.index');
+    Route::post('/configuracoes/funcionamento', [FuncionamentoController::class,'store'])->name('configuracoes.funcionamento.store');
+    Route::put('/configuracoes/funcionamento/{horario}', [FuncionamentoController::class,'update',])->name('configuracoes.funcionamento.update');
+    Route::delete('/configuracoes/funcionamento/{horario}', [FuncionamentoController::class,'destroy',])->name('configuracoes.funcionamento.destroy');
 
-    Route::get('/teste', function () {
-        return 'Você é admin: ' . auth()->user()->nome;
-    });
+    Route::get('/teste', function () {return 'Você é admin: ' . auth()->user()->nome;});
 });
 
 Route::get('/preview', function () {
