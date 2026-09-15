@@ -1,7 +1,7 @@
 <x-layout.guest-layout title="Redefinir senha">
     <h2 class="font-display text-3xl text-neutral-800 mb-6">Nova Senha</h2>
 
-    <form action="" class="space-y-4">
+    <form method="POST" action="{{ route('password.store') }}" class="space-y-4">
         @csrf
 
         <input type="hidden" name="token" value="{{ $request->route('token') }}">

@@ -45,7 +45,7 @@
                     </svg>
                     Início
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10">
+                <a href="{{ route('agenda.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10">
                     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -67,6 +67,46 @@
                     </svg>
                     Créditos
                 </a>
+                @if (auth()->user()?->perfil === 'admin')
+                <a
+                    href="{{ route('admin.configuracoes.funcionamento.index') }}"
+                    @if (request()->routeIs('admin.configuracoes.*'))
+                    aria-current="page"
+                    @endif
+                    class="flex items-center gap-3 rounded-lg px-4 py-3
+                    {{ request()->routeIs('admin.configuracoes.*')
+                        ? 'bg-white/20 font-semibold'
+                        : 'hover:bg-white/10' }}"
+                    >
+                    <svg
+                        class="h-5 w-5 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <path
+                            d="M4 7h16M4 17h16"
+                            stroke-width="2"
+                            stroke-linecap="round" />
+
+                        <circle
+                            cx="9"
+                            cy="7"
+                            r="3"
+                            fill="currentColor"
+                            stroke="none" />
+
+                        <circle
+                            cx="15"
+                            cy="17"
+                            r="3"
+                            fill="currentColor"
+                            stroke="none" />
+                    </svg>
+
+                    <span>Configurações</span>
+                </a>
+                @endif
             </nav>
 
             <form method="post" action="{{ route('logout') }}">
@@ -82,7 +122,7 @@
             </form>
         </aside>
 
-        <main class="flex-1 px-6 lg:px-12 py-8 pt-20 lg:pt-8">
+        <main class="flex-1 px-6 lg:px-12 py-8 pt-20 lg:pt-8 min-w-0">
             {{ $slot }}
         </main>
     </div>
